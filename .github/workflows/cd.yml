@@ -2,7 +2,7 @@ name: SSH
 on:
   push:
     branches:
-      - master
+      - main
       - feature/cd-docker-images
     paths-ignore:
       - '**.md'
