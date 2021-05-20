@@ -57,7 +57,7 @@ jobs:
               --network reverse-proxy \
               --restart unless-stopped \
               -l traefik.enable=true \
-              -l traefik.http.routers.API_QUICHE_WARS-Https.rule=Host\(\`wars.quiches.ovh\`\) && PathPrefix\(\`/api\`\) \
+              -l traefik.http.routers.API_QUICHE_WARS-Https.rule=Host\(\`wars.quiches.ovh\`\)\&\&PathPrefix\(\`/api\`\) \
               -l traefik.http.routers.API_QUICHE_WARS-Https.entrypoints=https \
               -l traefik.http.routers.API_QUICHE_WARS-Https.middlewares=security@file\,compression@file \
               -l traefik.http.routers.API_QUICHE_WARS-Https.tls=true \
