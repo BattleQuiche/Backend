@@ -58,13 +58,10 @@ jobs:
               --env-file .env.quicheswars \
               --restart unless-stopped \
               -l traefik.enable=true \
-              -l traefik.http.routers.API_QUICHE_WARS.rule=Host\(\`wars-api.quiches.ovh\`\) \
-              -l traefik.http.routers.API_QUICHE_WARS.entrypoints=http \
-              -l traefik.http.routers.API_QUICHE_WARS.middlewares=https-redirect@file \
-              -l traefik.http.routers.API_QUICHE_WARS-Https.rule=Host\(\`wars-api.quiches.ovh\`\) \
+              -l traefik.http.routers.API_QUICHE_WARS-Https.rule=Host\(\`wars.quiches.ovh\`\)\&\&PathPrefix\(\`/api\`\) \
               -l traefik.http.routers.API_QUICHE_WARS-Https.entrypoints=https \
               -l traefik.http.routers.API_QUICHE_WARS-Https.middlewares=security@file\,compression@file \
               -l traefik.http.routers.API_QUICHE_WARS-Https.tls=true \
               -l traefik.http.routers.API_QUICHE_WARS-Https.tls.certresolver=letsencrypt \
-                registry.maxencemottard.com/maxmottard/quichewars-core:latest;
+              registry.maxencemottard.com/maxmottard/quichewars-core:latest;
 
