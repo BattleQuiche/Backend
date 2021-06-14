@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import BaseRepository from './base.repository';
-import { User, UserDocument } from '../models/User.model';
+import { User, UserDocument } from '../models/user.model';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
