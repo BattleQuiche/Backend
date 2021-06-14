@@ -55,6 +55,7 @@ jobs:
             docker run --detach \
               --name quichewars_back \
               --network reverse-proxy \
+              --env-file .env.qiocheswars \
               --restart unless-stopped \
               -l traefik.enable=true \
               -l traefik.http.routers.API_QUICHE_WARS-Https.rule=Host\(\`wars.quiches.ovh\`\)\&\&PathPrefix\(\`/api\`\) \
