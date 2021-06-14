@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PartyModule } from './party/party.module';
 import { MongooseModule } from './mongoose.module';
 import { MongooseModule as NestJSMongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
 import config from './config';
 
 @Module({
@@ -9,6 +10,7 @@ import config from './config';
     PartyModule,
     MongooseModule,
     NestJSMongooseModule.forRoot(config().mongoUrl),
+    UserModule,
   ],
 })
 export class AppModule {}

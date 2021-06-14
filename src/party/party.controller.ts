@@ -8,7 +8,7 @@ export class PartyController {
   constructor(private readonly partyService: PartyService) {}
 
   @Put()
-  async createNewParty() {
+  createNewParty() {
     return this.partyService.createNewParty();
   }
 }

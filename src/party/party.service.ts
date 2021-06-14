@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PartyRepository } from '../repositories/party.repository';
-import { Party, PartyDocument } from '../models/party.model';
+import { PartyDocument } from '../models/party.model';
 
 @Injectable()
 export class PartyService {
