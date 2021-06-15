@@ -21,8 +21,13 @@ export class PartyController {
     await this.partyService.addPlayerInParty(partyId, user);
   }
 
-  @Get(':partyId')
+  @Get('details/:partyId')
   async getParty(@Param('partyId') partyId: string) {
     return this.partyService.getParty(partyId);
+  }
+
+  @Get('map')
+  getMap() {
+    return this.partyService.readMapFile();
   }
 }

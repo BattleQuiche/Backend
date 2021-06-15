@@ -8,12 +8,16 @@ import { PartyDocument } from '../models/party.model';
 import { UserRepository } from '../repositories/user.repository';
 import { AddPlayerDto } from './add-user.dto';
 
+import * as MAP from '../map.json';
+
 @Injectable()
 export class PartyService {
   constructor(
     private readonly partyRepository: PartyRepository,
     private readonly userRepository: UserRepository,
   ) {}
+
+  readMapFile = () => MAP;
 
   getParty = (partyId: string) => this.partyRepository.findOneBy({ partyId });
 
