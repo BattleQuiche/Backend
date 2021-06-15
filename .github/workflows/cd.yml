@@ -49,8 +49,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            docker rm -f quichewars_back || true;
             docker pull registry.maxencemottard.com/maxmottard/quichewars-core:latest;
+            docker rm -f quichewars_back || true;
 
             docker run --detach \
               --name quichewars_back \
