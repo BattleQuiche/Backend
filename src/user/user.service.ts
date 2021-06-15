@@ -6,6 +6,15 @@ import { CreateUserDto } from './creater-user.dto';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  createNewUser = (body: CreateUserDto) =>
-    this.userRepository.insert({ username: body.username });
+  createNewUser = async (body: CreateUserDto) => {
+    const user = await this.userRepository.findOneBy({
+      username: body.username,
+    });
+
+    if (!!user) {
+      return user;
+    }
+
+    return this.userRepository.insert({ username: body.username });
+  };
 }
