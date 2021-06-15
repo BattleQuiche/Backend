@@ -17,6 +17,16 @@ export class PartyService {
     private readonly userRepository: UserRepository,
   ) {}
 
+  getPartyPlayers = async (partyId: string) => {
+    const party = await this.partyRepository.findOneBy({ partyId });
+
+    if (!party) {
+      throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
+    }
+
+    return this.userRepository.findManyBy({ _id: party.users });
+  };
+
   readMapFile = () => MAP;
 
   getParty = (partyId: string) => this.partyRepository.findOneBy({ partyId });
@@ -39,6 +49,10 @@ export class PartyService {
 
     if (!party) {
       throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
+    }
+
+    if (party.users.length >= 4) {
+      throw new BadRequestException(null, 'MAX_4_PLAYERS');
     }
 
     if (party.users.includes(dto.userId)) {

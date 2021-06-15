@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { PartyService } from './party.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AddPlayerDto } from './add-user.dto';
 
 @ApiTags('Party')
@@ -21,11 +21,19 @@ export class PartyController {
     await this.partyService.addPlayerInParty(partyId, user);
   }
 
-  @Get('details/:partyId')
+  @Get(':partyId/details')
   async getParty(@Param('partyId') partyId: string) {
     return this.partyService.getParty(partyId);
   }
 
+  @Get(':partyId/players')
+  async getPartyPlayers(@Param('partyId') partyId: string) {
+    return this.partyService.getPartyPlayers(partyId);
+  }
+
+  @ApiOperation({
+    summary: '(Do not use on Swagger, json data is too high)',
+  })
   @Get('map')
   getMap() {
     return this.partyService.readMapFile();
