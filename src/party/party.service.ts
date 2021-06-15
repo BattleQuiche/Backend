@@ -7,7 +7,6 @@ import { PartyRepository } from '../repositories/party.repository';
 import { PartyDocument } from '../models/party.model';
 import { UserRepository } from '../repositories/user.repository';
 import { AddPlayerDto } from './add-user.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class PartyService {
@@ -15,6 +14,8 @@ export class PartyService {
     private readonly partyRepository: PartyRepository,
     private readonly userRepository: UserRepository,
   ) {}
+
+  getParty = (partyId: string) => this.partyRepository.findOneBy({ partyId });
 
   createNewParty = async () => {
     const parties = await this.partyRepository.findAllPArtyIds();
