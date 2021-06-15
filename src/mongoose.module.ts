@@ -4,6 +4,9 @@ import { Party, PartySchema } from './models/party.model';
 import { PartyRepository } from './repositories/party.repository';
 import { User, UserSchema } from './models/user.model';
 import { UserRepository } from './repositories/user.repository';
+import * as mongoose from 'mongoose';
+
+mongoose.set('useCreateIndex', true);
 
 @Module({
   imports: [
