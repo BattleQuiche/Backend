@@ -7,6 +7,8 @@ import { UserRepository } from './repositories/user.repository';
 import * as mongoose from 'mongoose';
 import { Action, ActionSchema } from './models/action.model';
 import { ActionRepository } from './repositories/action.repository';
+import { NotificationSubscriptionRepository } from './repositories/notification-subscription.repository';
+import { NotificationSubscription, NotificationSubscriptionSchema } from './models/notification-subscription.model';
 
 mongoose.set('useCreateIndex', true);
 
@@ -14,6 +16,7 @@ const mongooseConfig = [
   { repository: UserRepository, model: User, schema: UserSchema },
   { repository: PartyRepository, model: Party, schema: PartySchema },
   { repository: ActionRepository, model: Action, schema: ActionSchema },
+  { repository: NotificationSubscriptionRepository, model: NotificationSubscription, schema: NotificationSubscriptionSchema },
 ];
 
 @Module({

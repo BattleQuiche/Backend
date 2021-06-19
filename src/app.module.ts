@@ -5,6 +5,7 @@ import { MongooseModule as NestJSMongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { ActionModule } from './action/action.module';
 import config from './config';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import config from './config';
     NestJSMongooseModule.forRoot(config().mongoUrl),
     UserModule,
     ActionModule,
+    NotificationModule,
   ],
 })
 export class AppModule {}
