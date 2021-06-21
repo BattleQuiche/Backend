@@ -38,4 +38,9 @@ export class PartyController {
   getMap() {
     return this.partyService.readMapFile();
   }
+
+  @Get('movable-tiles')
+  getMovableTiles() {
+    return this.partyService.readMovableTilesFile();
+  }
 }

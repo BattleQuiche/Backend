@@ -9,6 +9,8 @@ import { UserRepository } from '../repositories/user.repository';
 import { AddPlayerDto } from './add-user.dto';
 
 import * as MAP from '../map.json';
+import * as MAP from '../json/map.json';
+import * as MovableTiles from '../json/movable-tiles.json';
 
 @Injectable()
 export class PartyService {
@@ -28,6 +30,8 @@ export class PartyService {
   };
 
   readMapFile = () => MAP;
+
+  readMovableTilesFile = () => MovableTiles;
 
   getParty = (partyId: string) => this.partyRepository.findOneBy({ partyId });
 
