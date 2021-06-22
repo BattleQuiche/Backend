@@ -42,4 +42,52 @@ export class ActionService {
     }
   };
 
+  randomPop = async (party: Party, user: User) => {
+    const layerMap = this.findLayerInMap('Map');
+    const layerMapDecorations = this.findLayerInMap('MapDecorations');
+    const layerObjects = this.findLayerInMap('Objects');
+
+    const availableCases = [...Array(MAP.width * MAP.height).keys()]
+      .map((_, index) => [
+        layerMap[index],
+        layerMapDecorations[index],
+        layerObjects[index],
+      ])
+      .map((values, index) => ({
+        index,
+        canMove: this.canMove(values),
+      }))
+      .filter((mapCase) => mapCase.canMove);
+
+    const randomCaseIndex = Math.floor(Math.random() * availableCases.length);
+    const randomCase = availableCases[randomCaseIndex];
+    const { x, y } = this.caseIndexToXY(randomCase.index);
+
+    await this.addAction({
+      partyId: party.partyId,
+      userId: String(user._id),
+      actionType: ActionType.POP,
+      date: Date.now(),
+      fromX: null,
+      fromY: null,
+      toX: x,
+      toY: y,
+    });
+  };
+
+  //  Utils
+  private caseIndexToXY = (caseIndex: number) => {
+    const x = caseIndex % MAP.width;
+    const y = (caseIndex - x) / MAP.width;
+
+    return { x: x - 1, y: y - 1 };
+  };
+
+  private canMove = (tiles: number[]): boolean => {
+    return tiles.every((item) => MovableTiles.includes(item));
+  };
+
+  private findLayerInMap = (layerName) => {
+    return MAP.layers.find((layer) => layer.name === layerName)?.data;
+  };
 }

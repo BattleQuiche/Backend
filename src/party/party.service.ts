@@ -6,9 +6,8 @@ import {
 import { PartyRepository } from '../repositories/party.repository';
 import { PartyDocument } from '../models/party.model';
 import { UserRepository } from '../repositories/user.repository';
-import { AddPlayerDto } from './add-user.dto';
-
-import * as MAP from '../map.json';
+import { AddPlayerDto } from './dto/add-user.dto';
+import { ActionService } from './action.service';
 import * as MAP from '../json/map.json';
 import * as MovableTiles from '../json/movable-tiles.json';
 
@@ -17,6 +16,7 @@ export class PartyService {
   constructor(
     private readonly partyRepository: PartyRepository,
     private readonly userRepository: UserRepository,
+    private readonly actionService: ActionService,
   ) {}
 
   getPartyPlayers = async (partyId: string) => {
@@ -43,9 +43,9 @@ export class PartyService {
   };
 
   addPlayerInParty = async (partyId: string, dto: AddPlayerDto) => {
-    const userInDB = await this.userRepository.findOneById(dto.userId);
+    const user = await this.userRepository.findOneById(dto.userId);
 
-    if (!userInDB) {
+    if (!user) {
       throw new NotFoundException(null, 'CANNOT_FIND_USER');
     }
 
@@ -71,6 +71,8 @@ export class PartyService {
     if (!result) {
       throw new BadRequestException();
     }
+
+    this.actionService.randomPop(party, user);
   };
 
   private generateRandomPartyId = (parties: PartyDocument[]): string => {
