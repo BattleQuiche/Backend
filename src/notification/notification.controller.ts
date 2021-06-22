@@ -3,8 +3,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { NotificationService } from './notification.service';
 import { SaveSubscriptionDto } from './save-subscription.dto';
 
-@ApiTags('Application Action')
-@Controller('application')
+@ApiTags('Notification Action')
+@Controller('notification')
 export class NotificationController {
   constructor(private readonly applicationService: NotificationService) {}
 
