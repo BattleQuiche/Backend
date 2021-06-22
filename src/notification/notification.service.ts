@@ -25,11 +25,15 @@ export class NotificationService {
       userId,
     });
 
-  sendNotification = async ({ userId, title }: Record<string, string>) => {
+  sendNotification = async ({
+    userId,
+    title,
+    message,
+  }: Record<string, string>) => {
     try {
       const notificationSubscriptions =
         await this.notificationSubscriptionRepository.findManyBy({ userId });
-      const notification = { title };
+      const notificationData = { title, message };
       // const notifications: Promise<SendResult>[] = [];
 
       const notificationPromises = notificationSubscriptions
@@ -40,7 +44,7 @@ export class NotificationService {
         .map((notificationSubscription) =>
           webpush.sendNotification(
             notificationSubscription,
-            JSON.stringify(notification),
+            JSON.stringify(notificationData),
           ),
         );
       await Promise.all(notificationPromises);

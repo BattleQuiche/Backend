@@ -18,7 +18,7 @@ export class NotificationController {
     await this.applicationService.saveSubscription(body);
     await this.applicationService.sendNotification({
       userId: body.userId,
-      title: 'Backend notification test',
+      title: 'Backend notification registration successful',
       message:
         "Ceci est un test de notification retournée pour signaler que l'utilisateur est bien enregistré au stream des notifs",
     });
