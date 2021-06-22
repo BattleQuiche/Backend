@@ -18,9 +18,11 @@ const useSwagger = (app: INestApplication) => {
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: 'http://localhost:8080',
-  });
+  if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'production') {
+    app.enableCors({
+      origin: 'http://localhost:8080',
+    });
+  }
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
 
