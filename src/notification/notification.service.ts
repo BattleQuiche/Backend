@@ -34,8 +34,6 @@ export class NotificationService {
       const notificationSubscriptions =
         await this.notificationSubscriptionRepository.findManyBy({ userId });
       const notificationData = { title, message };
-      // const notifications: Promise<SendResult>[] = [];
-
       const notificationPromises = notificationSubscriptions
         .map(({ auth, publicKey, endpoint }) => ({
           endpoint,

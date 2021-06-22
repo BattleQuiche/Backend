@@ -12,7 +12,6 @@ import { NotificationModule } from './notification/notification.module';
     MongooseModule,
     NestJSMongooseModule.forRoot(config().mongoUrl),
     UserModule,
-    ActionModule,
     NotificationModule,
   ],
 })
