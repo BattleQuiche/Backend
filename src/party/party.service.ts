@@ -72,7 +72,7 @@ export class PartyService {
       throw new BadRequestException();
     }
 
-    this.actionService.randomPop(party, user);
+    await this.actionService.randomPop(party, user);
   };
 
   private generateRandomPartyId = (parties: PartyDocument[]): string => {
