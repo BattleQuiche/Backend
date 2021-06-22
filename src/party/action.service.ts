@@ -1,9 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AddActionDTO } from './add-action.dto';
+import { AddActionDTO } from './dto/add-action.dto';
 import { ActionRepository } from '../repositories/action.repository';
 import { UserRepository } from '../repositories/user.repository';
 import { PartyRepository } from '../repositories/party.repository';
-import MAP from '../map.json';
+import { User } from '../models/user.model';
+import { Party } from '../models/party.model';
+import { ActionType } from '../models/action.model';
+import * as MAP from '../json/map.json';
+import * as MovableTiles from '../json/movable-tiles.json';
 
 @Injectable()
 export class ActionService {
@@ -28,6 +32,14 @@ export class ActionService {
       throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
     }
 
-    return this.actionRepository.insert(dto);
+    await this.actionRepository.insert(dto);
+
+    if ([ActionType.MOVE, ActionType.POP].includes(dto.actionType)) {
+      await this.userRepository.updateOneBy(
+        { _id: userInDB._id },
+        { x: dto.toX, y: dto.toY },
+      );
+    }
   };
+
 }

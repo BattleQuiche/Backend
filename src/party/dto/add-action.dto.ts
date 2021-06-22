@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { Types } from 'mongoose';
 import { Prop } from '@nestjs/mongoose';
-import { ActionType } from '../models/action.model';
+import { ActionType } from '../../models/action.model';
 
 export class AddActionDTO {
   @ApiProperty()
