@@ -1,12 +1,17 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { PartyService } from './party.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AddPlayerDto } from './add-user.dto';
+import { AddPlayerDto } from './dto/add-user.dto';
+import { AddActionDTO } from './dto/add-action.dto';
+import { ActionService } from './action.service';
 
 @ApiTags('Party')
 @Controller('party')
 export class PartyController {
-  constructor(private readonly partyService: PartyService) {}
+  constructor(
+    private readonly partyService: PartyService,
+    private readonly actionService: ActionService,
+  ) {}
 
   @Put()
   createNewParty() {
@@ -37,5 +42,15 @@ export class PartyController {
   @Get('map')
   getMap() {
     return this.partyService.readMapFile();
+  }
+
+  @Get('movable-tiles')
+  getMovableTiles() {
+    return this.partyService.readMovableTilesFile();
+  }
+
+  @Put('action')
+  addAction(@Body() body: AddActionDTO) {
+    return this.actionService.addAction(body);
   }
 }

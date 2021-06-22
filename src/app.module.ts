@@ -3,7 +3,6 @@ import { PartyModule } from './party/party.module';
 import { MongooseModule } from './mongoose.module';
 import { MongooseModule as NestJSMongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
-import { ActionModule } from './action/action.module';
 import config from './config';
 import { NotificationModule } from './notification/notification.module';
 
