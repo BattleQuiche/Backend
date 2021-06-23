@@ -75,6 +75,7 @@ export class PartyService {
         users: [
           {
             userId: dto.userId,
+            username: user.username,
             icon,
             x: null,
             y: null,
