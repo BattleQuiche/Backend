@@ -31,11 +31,6 @@ export class PartyController {
     return this.partyService.getParty(partyId);
   }
 
-  @Get(':partyId/players')
-  async getPartyPlayers(@Param('partyId') partyId: string) {
-    return this.partyService.getPartyPlayers(partyId);
-  }
-
   @ApiOperation({
     summary: '(Do not use on Swagger, json data is too high)',
   })

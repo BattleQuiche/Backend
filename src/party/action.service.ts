@@ -18,12 +18,6 @@ export class ActionService {
   ) {}
 
   addAction = async (dto: AddActionDTO) => {
-    const userInDB = await this.userRepository.findOneById(dto.userId);
-
-    if (!userInDB) {
-      throw new NotFoundException(null, 'CANNOT_FIND_USER');
-    }
-
     const party = await this.partyRepository.findOneBy({
       partyId: dto.partyId,
     });
@@ -35,9 +29,9 @@ export class ActionService {
     await this.actionRepository.insert(dto);
 
     if ([ActionType.MOVE, ActionType.POP].includes(dto.actionType)) {
-      await this.userRepository.updateOneBy(
-        { _id: userInDB._id },
-        { x: dto.toX, y: dto.toY },
+      await this.partyRepository.updateOneBy(
+        { _id: party._id, 'users.userId': dto.userId },
+        { 'users.$.x': dto.toX, 'users.$.y': dto.toY },
       );
     }
   };

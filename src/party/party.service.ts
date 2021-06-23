@@ -19,16 +19,6 @@ export class PartyService {
     private readonly actionService: ActionService,
   ) {}
 
-  getPartyPlayers = async (partyId: string) => {
-    const party = await this.partyRepository.findOneBy({ partyId });
-
-    if (!party) {
-      throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
-    }
-
-    return this.userRepository.findManyBy({ _id: party.users });
-  };
-
   readMapFile = () => MAP;
 
   readMovableTilesFile = () => MovableTiles;
@@ -55,15 +45,15 @@ export class PartyService {
       throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
     }
 
-    if (party.users.length >= 4) {
-      throw new BadRequestException(null, 'MAX_4_PLAYERS');
-    }
-
     const userWithSameId = party.users.find(
       (user) => user.userId === dto.userId,
     );
     if (!!userWithSameId) {
       return;
+    }
+
+    if (party.users.length >= 4) {
+      throw new BadRequestException(null, 'MAX_4_PLAYERS');
     }
 
     const icons = [
@@ -86,6 +76,8 @@ export class PartyService {
           {
             userId: dto.userId,
             icon,
+            x: null,
+            y: null,
           },
         ],
       },
