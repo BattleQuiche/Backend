@@ -8,7 +8,7 @@ export class Party {
   _id: Types.ObjectId;
 
   @Prop({ required: true, default: [] })
-  users: [string];
+  users: Record<string, string>[];
 
   @Prop({ required: true, unique: true })
   partyId: string;

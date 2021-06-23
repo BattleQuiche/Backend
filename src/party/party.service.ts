@@ -59,13 +59,36 @@ export class PartyService {
       throw new BadRequestException(null, 'MAX_4_PLAYERS');
     }
 
-    if (party.users.includes(dto.userId)) {
+    const userWithSameId = party.users.find(
+      (user) => user.userId === dto.userId,
+    );
+    if (!!userWithSameId) {
       return;
     }
 
+    const icons = [
+      'player_icon_1',
+      'player_icon_2',
+      'player_icon_3',
+      'player_icon_4',
+    ].filter((icon) =>
+      party.users
+        .map((player) => player.icon === icon)
+        .every((value) => !value),
+    );
+
+    const icon = icons[Math.floor(Math.random() * icons.length)];
+
     const result = await this.partyRepository.pushArray(
       { partyId },
-      { users: [dto.userId] },
+      {
+        users: [
+          {
+            userId: dto.userId,
+            icon,
+          },
+        ],
+      },
     );
 
     if (!result) {
