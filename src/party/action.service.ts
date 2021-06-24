@@ -5,7 +5,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { PartyRepository } from '../repositories/party.repository';
 import { User } from '../models/user.model';
 import { Party } from '../models/party.model';
-import { ActionType } from '../models/action.model';
+import { ActionType, Action } from '../models/action.model';
 import * as MAP from '../json/map.json';
 import * as MovableTiles from '../json/movable-tiles.json';
 
@@ -35,6 +35,11 @@ export class ActionService {
       );
     }
   };
+
+  getActions = async (partyId: string) =>
+    this.actionRepository
+      .findManyBy({ partyId })
+      .then((actions: Action[]) => actions.sort((a, b) => a.date - b.date));
 
   randomPop = async (party: Party, user: User) => {
     const layerMap = this.findLayerInMap('Map');

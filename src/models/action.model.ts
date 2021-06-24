@@ -29,6 +29,9 @@ export class Action {
 
   @Prop({ required: false })
   toY: number;
+
+  @Prop({ required: true })
+  date: number;
 }
 
 export const ActionSchema = SchemaFactory.createForClass(Action);
