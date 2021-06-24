@@ -38,13 +38,15 @@ export class ActionService {
 
   randomPop = async (party: Party, user: User) => {
     const layerMap = this.findLayerInMap('Map');
-    const layerMapDecorations = this.findLayerInMap('MapDecorations');
+    const layerWater = this.findLayerInMap('Water');
+    const layerSurObjects = this.findLayerInMap('SurObjects');
     const layerObjects = this.findLayerInMap('Objects');
 
     const availableCases = [...Array(MAP.width * MAP.height).keys()]
       .map((_, index) => [
         layerMap[index],
-        layerMapDecorations[index],
+        layerWater[index],
+        layerSurObjects[index],
         layerObjects[index],
       ])
       .map((values, index) => ({
