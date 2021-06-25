@@ -6,6 +6,7 @@ export type ActionDocument = Action & Document;
 export enum ActionType {
   MOVE = 'MOVE',
   POP = 'POP',
+  NEXT_ROUND = 'NEXT_ROUND',
 }
 
 @Schema()
