@@ -4,6 +4,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AddPlayerDto } from './dto/add-user.dto';
 import { AddActionDTO } from './dto/add-action.dto';
 import { ActionService } from './action.service';
+import { NextRoundDto } from './dto/next-round.dto';
 
 @ApiTags('Party')
 @Controller('party')
@@ -52,5 +53,10 @@ export class PartyController {
   @Get(':partyId/actions')
   getActions(@Param('partyId') partyId: string) {
     return this.actionService.getActions(partyId);
+  }
+
+  @Post('/next-round')
+  getNextRound(@Body() body: NextRoundDto) {
+    return this.actionService.getNextRound(body);
   }
 }

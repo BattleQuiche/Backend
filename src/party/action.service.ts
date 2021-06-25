@@ -8,6 +8,8 @@ import { Party } from '../models/party.model';
 import { ActionType, Action } from '../models/action.model';
 import * as MAP from '../json/map.json';
 import * as MovableTiles from '../json/movable-tiles.json';
+import { NextRoundDto } from './dto/next-round.dto';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class ActionService {
@@ -15,6 +17,7 @@ export class ActionService {
     private readonly actionRepository: ActionRepository,
     private readonly userRepository: UserRepository,
     private readonly partyRepository: PartyRepository,
+    private readonly notificationService: NotificationService,
   ) {}
 
   addAction = async (dto: AddActionDTO) => {
@@ -76,6 +79,45 @@ export class ActionService {
     });
   };
 
+  getNextRound = async (dto: NextRoundDto) => {
+    const user = await this.userRepository.findOneById(dto.userId);
+
+    if (!user) {
+      throw new NotFoundException(null, 'CANNOT_FIND_USER');
+    }
+
+    const party = await this.partyRepository.findOneBy({
+      partyId: dto.partyId,
+    });
+
+    if (!party) {
+      throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
+    }
+    const players = [...party.users, ...party.users];
+
+    const indexNext = players.findIndex(
+      (player) => player.userId === dto.userId,
+    );
+    const nextPlayer = players[indexNext + 1];
+
+    await this.notificationService.sendNotification({
+      userId: nextPlayer.userId,
+      title: "C'est à votre tour de jouer !",
+      message:
+        "Votre adversaire a fini son tour et c'est désormais à vous de jouer !",
+    });
+
+    await this.addAction({
+      partyId: dto.partyId,
+      userId: String(dto.userId),
+      actionType: ActionType.NEXT_ROUND,
+      date: Date.now(),
+      fromX: null,
+      fromY: null,
+      toX: null,
+      toY: null,
+    });
+  };
   //  Utils
   private caseIndexToXY = (caseIndex: number) => {
     const x = caseIndex % MAP.width;
