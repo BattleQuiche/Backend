@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - feature/cd-docker-images
+      - feature/addActionUser
     paths-ignore:
       - '**.md'
 jobs:

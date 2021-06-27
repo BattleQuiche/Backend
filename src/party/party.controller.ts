@@ -50,9 +50,9 @@ export class PartyController {
     return this.actionService.addAction(body);
   }
 
-  @Get(':partyId/actions')
-  getActions(@Param('partyId') partyId: string) {
-    return this.actionService.getActions(partyId);
+  @Post(':partyId/actions')
+  getActions(@Param('partyId') partyId: string, @Body() body: AddPlayerDto) {
+    return this.actionService.getActions(partyId, body);
   }
 
   @Post('/next-round')

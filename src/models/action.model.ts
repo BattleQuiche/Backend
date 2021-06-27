@@ -19,6 +19,9 @@ export class Action {
   @Prop({ required: true })
   actionType: ActionType;
 
+  @Prop({ required: true })
+  userId: ActionType;
+
   @Prop({ required: false })
   fromX: number;
 
