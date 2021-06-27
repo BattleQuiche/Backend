@@ -10,7 +10,6 @@ import * as MAP from '../json/map.json';
 import * as MovableTiles from '../json/movable-tiles.json';
 import { NextRoundDto } from './dto/next-round.dto';
 import { NotificationService } from '../notification/notification.service';
-import { AddPlayerDto } from './dto/add-user.dto';
 
 @Injectable()
 export class ActionService {
@@ -30,8 +29,6 @@ export class ActionService {
       throw new NotFoundException(null, 'CANNOT_FIND_PARTY');
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     await this.actionRepository.insert(dto);
 
     if ([ActionType.MOVE, ActionType.POP].includes(dto.actionType)) {
@@ -42,7 +39,7 @@ export class ActionService {
     }
   };
 
-  getActions = async (partyId: string, body: AddPlayerDto) =>
+  getActions = async (partyId: string) =>
     this.actionRepository
       .findManyBy({ partyId })
       .then((actions: Action[]) => actions.sort((a, b) => a.date - b.date));
