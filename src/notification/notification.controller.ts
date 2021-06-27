@@ -16,24 +16,5 @@ export class NotificationController {
   @Post('save')
   async saveSubscription(@Body() body: SaveSubscriptionDto) {
     await this.applicationService.saveSubscription(body);
-    await this.applicationService.sendNotification({
-      userId: body.userId,
-      title: 'Backend notification registration successful',
-      message:
-        "Ceci est un test de notification retournée pour signaler que l'utilisateur est bien enregistré au stream des notifs",
-    });
-  }
-
-  @Post('test-notif')
-  async sendTestNotification(@Body() body) {
-    console.log('New notif request with body: ', body);
-
-    await this.applicationService.sendNotification({
-      userId: body.userId,
-      title: 'Backend notification test',
-      message:
-        "Ceci est un test de notification retournée pour signaler que l'utilisateur est bien enregistré au stream des notifs",
-    });
-    return 'notification send successfully';
   }
 }
